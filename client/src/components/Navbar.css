@@ -1,0 +1,60 @@
+.margin{
+    margin: 8px 4px;
+}
+nav{
+    display: flex;
+}
+#navbar{
+    align-items: center;
+    display: flex;
+    color: #4B5563;
+    font-size: 17px;
+}
+.signin{
+    /* border: solid 1px black; */
+    border-radius: 10px;
+  }
+.signin:hover{
+    border-radius: 30px;
+    transition: border-radius .15s;
+  }
+#mobail{
+    display: none;
+    margin-top: 8px;
+}
+#mobail i{
+    color: #4B5563;
+}
+@media screen and (max-width:1023px) {
+    #navbar{
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        position: fixed;
+        top: 92px;
+        right: -300px;
+        width: 300px;
+        height: 86vh;
+        background-color: #E0F2FE ;
+        box-shadow: 0 40px 60px rgba(0, 0, 0, 0.1);
+        padding: 40px 0 0 10px;
+        /* border: solid 2px; */
+        transition: 0.6s ease-in-out ;
+    }
+    #navbar.active{
+        right: 5px;
+    }
+    #navbar li{
+        margin-bottom: 30px;
+    }
+    #mobail{
+        display: block;
+        margin-left: auto;
+    }
+    #mobail i{
+        font-size: 20px;
+        cursor: pointer;
+    }
+} 
