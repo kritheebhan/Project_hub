@@ -1,38 +1,20 @@
-import React, { Component } from 'react';
+import React, { useState} from 'react';
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 import img1 from "../components/image/img1.png"
 import google from "../components/image/google.png"
 
-class SignUpForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-    };
-  }
+function SignUpForm() {
+  const[name, setName] = useState()
+  const[email, setEmail] = useState()
+  const[password, setPassword] = useState()
 
-  handleInputChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    axios.post('http://localhost:3001/register',{name, email, password})
+    .then(result => console.log(result))
+    .catch(err => console.log(err))
   }
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const { firstName, lastName, email, password } = this.state;
-    // Here, you can perform validation and user registration logic.
-    // You might want to make an API request to a backend server to create a new user.
-    console.log('First Name:', firstName);
-    console.log('Last Name:', lastName);
-    console.log('Email:', email);
-    console.log('Password:', password);
-  }
-
-  render() {
-    const { firstName, email, password } = this.state;
-    
     return (
       
       <div className="signup1 flex relative ">
@@ -47,16 +29,16 @@ class SignUpForm extends Component {
         <button className=" text-zinc-500 text-s font-normal font-['Telegraf'] leading-9">Sign up with Google</button> 
         </div> 
         <div className="text-neutral-400 text-lg font-normal font-['Telegraf'] leading-9">- OR -</div>
-        <form onSubmit={this.handleSubmit} className='flex flex-col justify-center items-center'>
+        <form onSubmit={handleSubmit} className='flex flex-col justify-center items-center'>
           <div>
             {/* <label htmlFor="firstName">First Name:</label> */}
             <input className="input-box text-neutral-700 text-base font-normal w-72 md:w-96 py-2"
             placeholder='Full Name'
               type="text"
-              id="firstName"
-              name="firstName"
-              value={firstName}
-              onChange={this.handleInputChange}
+              id="name"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
@@ -68,7 +50,7 @@ class SignUpForm extends Component {
               id="email"
               name="email"
               value={email}
-              onChange={this.handleInputChange}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -80,7 +62,7 @@ class SignUpForm extends Component {
               id="password"
               name="password"
               value={password}
-              onChange={this.handleInputChange}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -93,6 +75,5 @@ class SignUpForm extends Component {
       </div>
     );
   }
-}
 
 export default SignUpForm;

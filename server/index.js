@@ -1,25 +1,19 @@
-const express = require('express');
-const app = express();
-const mongoose = require('mongoose');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express")
+const mongoose = require("mongoose")
+const cors = require("cors")
+const UserModel = require('./models/User')
 
+const app = express()
+app.use(express.json())
+app.use(cors())
 
-
-const mongourl = "mongodb+srv://jp:2000@cluster0.0fbs3i3.mongodb.net/?retryWrites=true&w=majority";
-
-mongoose.set("strictQuery", false);
-mongoose.connect(mongourl, {
-    useNewUrlparser: true,
+mongoose.connect("mongodb://127.0.0.1:27017/Project_hub")
+app.post('/register',(req, res) =>{
+    UserModel.create(req.body)
+    .then(User => res.json(User))
+    .catch(err => res.json(err))
 })
-.then(()=>{
-    console.log('mongodb connect');
-})
-.catch((e)=> console.log(e));
 
-app.get('/',(req,res)=>{
-    res.send("hello hi")
-})
-app.listen(4000,() =>{
-    console.log("Server is running on the port 4000");
+app.listen(3001, () => {
+    console.log("server is running")
 })
