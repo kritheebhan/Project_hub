@@ -1,34 +1,25 @@
-import React, { Component } from 'react';
+import React, { useState} from 'react';
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 import img2 from "../components/image/img2.png"
 import google from "../components/image/google.png"
 
-class SignInForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-    };
-  }
+function SignInForm() {
+  const[email, setEmail] = useState()
+  const[password, setPassword] = useState()
+  const navigate = useNavigate()
 
-  handleInputChange = (event) => {
-    const { name, value } = event.target;
-    this.setState({ [name]: value });
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const { email, password } = this.state;
-    // Here, you can perform validation and authentication logic.
-    // You might want to make an API request to a backend server to verify credentials.
-    console.log('Email:', email);
-    console.log('Password:', password);
-  }
-
-  render() {
-    const { email, password } = this.state;
-    
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    axios.post('http://localhost:3001/login',{email, password})
+    .then(result => {console.log(result)
+      if(result.data === "Success"){
+        navigate('/')
+      }
+    })
+    .catch(err => console.log(err))
+  }  
     return (
       <div>
         <div className="signin1 flex relative ">
@@ -39,7 +30,7 @@ class SignInForm extends Component {
         <button className=" text-zinc-500 text-s font-normal font-['Telegraf'] leading-9">Sign in with Google</button> 
         </div> 
         <div className="text-neutral-400 text-lg font-normal font-['Telegraf'] leading-9">- OR -</div>
-        <form onSubmit={this.handleSubmit} className='flex flex-col justify-center items-center'>
+        <form onSubmit={handleSubmit} className='flex flex-col justify-center items-center'>
           <div>
             {/* <label htmlFor="email">Email:</label> */}
             <input className="input-box text-neutral-700 text-base font-normal w-72 md:w-96 py-2"
@@ -48,7 +39,7 @@ class SignInForm extends Component {
               id="email"
               name="email"
               value={email}
-              onChange={this.handleInputChange}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -60,7 +51,7 @@ class SignInForm extends Component {
               id="password"
               name="password"
               value={password}
-              onChange={this.handleInputChange}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -78,6 +69,5 @@ class SignInForm extends Component {
       </div>
     );
   }
-}
 
 export default SignInForm;

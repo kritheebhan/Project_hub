@@ -1,5 +1,6 @@
 import React, { useState} from 'react';
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import img1 from "../components/image/img1.png"
 import google from "../components/image/google.png"
@@ -8,11 +9,14 @@ function SignUpForm() {
   const[name, setName] = useState()
   const[email, setEmail] = useState()
   const[password, setPassword] = useState()
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     axios.post('http://localhost:3001/register',{name, email, password})
-    .then(result => console.log(result))
+    .then(result => {console.log(result)
+    navigate('/Signin')
+    })
     .catch(err => console.log(err))
   }
     return (
