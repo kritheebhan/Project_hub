@@ -5,16 +5,6 @@ const UserModel = require('./models/User')
 
 const app = express()
 app.use(express.json())
-app.use(cors(
-    {
-        origin: [],
-        methods:["POST","GET"],
-        credentials: true
-    }
-));
-app.get("/",(req,res)=>{
-    res.json("hello");
-})
 
 mongoose.connect("mongodb+srv://jai:2000@projecthub.qctvxrx.mongodb.net/projecthub")
 
